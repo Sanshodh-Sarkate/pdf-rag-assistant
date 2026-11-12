@@ -4,7 +4,7 @@ from dotenv import  load_dotenv
 
 load_dotenv()  ## here we  load the  env varibales  
 
-
+## This code  connect to the cassandra  
 def connect_to_cassandra():
     """
     Initialize connection with Astra DB using CassIO.

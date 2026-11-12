@@ -3,7 +3,7 @@ from langchain_community.vectorstores import Cassandra
 from rag_chatbot.database.cassandra_client import connect_to_cassandra
 from rag_chatbot.data_ingestion.embeddings import get_embedding_model
 
-
+# this  for the get  the  vector 
 def get_vector_store():
 
     # Connect to Astra DB
@@ -21,6 +21,7 @@ def get_vector_store():
     return vector_store
 
 
+## Storing the  embediings  in  the  Db  
 def store_documents(chunks):
 
     vector_store = get_vector_store()
