@@ -1,11 +1,10 @@
-#It helps us create a reusable prompt structure instead of manually writing the entire prompt every time.
+
 from langchain_core.prompts import ChatPromptTemplate
 
 
-## system prompts
 SYSTEM_PROMPT = """
 You are a helpful AI assistant that answers questions
-based on the provided PDF document context.
+based only on the provided PDF document context.
 
 Follow these rules:
 
@@ -14,41 +13,30 @@ Follow these rules:
 3. If the answer is not available in the context,
    clearly say that the information was not found.
 4. Provide clear and concise answers.
-5. Include the source PDF filename and page number
-   for the information used in your answer.
+5. Every factual answer must include its supporting source.
+6. Use the exact PDF filename and page number provided
+   in the context.
+7. Never invent or modify source filenames or page numbers.
+8. If multiple documents support the answer, cite each
+   relevant source.
+
+Citation format:
+
+Source: <PDF filename>
+Page: <page number>
 
 Context:
-{context}  ## The relevant chunks retrieved from Astra DB.
+{context}
 """
 
-## prompts  
+
 def get_prompt():
-   prompt=ChatPromptTemplate.from_messages(
+
+    prompt = ChatPromptTemplate.from_messages(
         [
             ("system", SYSTEM_PROMPT),
             ("human", "{question}")
         ]
     )
-   
-   return prompt
 
-
-
-
-# if __name__ == "__main__":
-
-#     prompt = get_prompt()
-
-#     formatted_prompt = prompt.invoke({
-#         "context": """
-#         Employees must read applicable policies,
-#         complete required training, and protect
-#         company information.
-
-#         Source: Company_Policies_Sample_50_Pages.pdf
-#         Page: 4
-#         """,
-#         "question": "What are the responsibilities of employees?"
-#     })
-
-#     print(formatted_prompt)
+    return prompt
