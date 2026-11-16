@@ -14,11 +14,13 @@ def format_documents(documents):
 
     for doc in documents:
         source = doc.metadata.get("source", "Unknown source")
-        page = doc.metadata.get("page", "Unknown page")
-
+        # page = doc.metadata.get("page", "Unknown page")
+        page = int(float(doc.metadata.get("page", "Unknown page")))
+        # print(type(page))
+        # print(page)
         content = f"""
 Source: {source}
-Page: {int(page) if isinstance(page, (int, float)) else page}
+Page: {page}
 
 Content:
 {doc.page_content}

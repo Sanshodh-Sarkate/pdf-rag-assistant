@@ -7,24 +7,25 @@ from  rag_chatbot.database.vector_store import get_vector_store
 SIMILARITY_THRESHOLD = 0.65
 
 
-## This function is retrive the  releavent document search and return some  socore  here  k means return the maximum 4 result  
-def retrieve_documents(query:str , k: int = 4)->list[Document]:
-    ##Get the existing vector data from astra db 
-    vector_store = get_vector_store()
-    # print(vector_store)
-    
-    # Search for the most relevant document with score 
-    results  = vector_store.similarity_search_with_score(query=query , k=k)
-    
-    relevant_documents = []
-    
-    for  doc , score  in  results:
-        #  print(f"Similarity Score: {score}")
-         if score >= SIMILARITY_THRESHOLD:
-             relevant_documents.append(doc)
-    print(f"Relevant Documents: {len(relevant_documents)}")         
-    
-    return relevant_documents
+## This function retrieves relevant document search and returns results above threshold
+def retrieve_documents(query: str, k: int = 4) -> list[Document]:
+    try:
+        ## Get the existing vector data from astra db 
+        vector_store = get_vector_store()
+        
+        # Search for the most relevant document with score 
+        results = vector_store.similarity_search_with_score(query=query, k=k)
+        
+        relevant_documents = []
+        for doc, score in results:
+            if score >= SIMILARITY_THRESHOLD:
+                relevant_documents.append(doc)
+
+        print(f"Relevant Documents: {len(relevant_documents)}")         
+        return relevant_documents
+    except Exception as e:
+        print(f"Error retrieving documents for query '{query}': {e}")
+        return []
 
 
  
