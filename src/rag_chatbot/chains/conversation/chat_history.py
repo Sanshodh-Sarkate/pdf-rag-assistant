@@ -1,19 +1,30 @@
-from langchain_core.chat_history import  InMemoryChatMessageHistory
+from langchain_core.chat_history import InMemoryChatMessageHistory
 from langgraph.checkpoint.memory import InMemorySaver
 
-# chat_history=InMemoryChatMessageHistory()
 # InMemorySaver stores conversation state using a session/
-chat_memory = InMemorySaver() 
+chat_memory = InMemorySaver()
+chat_history = InMemoryChatMessageHistory()
 
-def add_user_message(message:str):
-    chat_history.add_user_message(message)
-    
-    
-def add_ai_message(message:str):
-    chat_history.add_ai_message(message)
-    
+def add_user_message(message: str):
+    try:
+        chat_history.add_user_message(message)
+    except Exception as e:
+        print(f"Error adding user message to history: {e}")
+
+
+def add_ai_message(message: str):
+    try:
+        chat_history.add_ai_message(message)
+    except Exception as e:
+        print(f"Error adding AI message to history: {e}")
+
+
 def get_chat_history():
-    return chat_history.messages    
+    try:
+        return chat_history.messages
+    except Exception as e:
+        print(f"Error retrieving chat history: {e}")
+        return []    
 
 
 

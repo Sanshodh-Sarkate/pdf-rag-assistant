@@ -262,6 +262,18 @@ wheels = [
 ]
 
 [[package]]
+name = "cassandra-asyncio-driver"
+version = "0.1.4"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cassandra-driver" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/3d/bd/93224e93a6c5511d68c19b94fdcc096a2e2031f61d44b126348c8ffb7566/cassandra_asyncio_driver-0.1.4.tar.gz", hash = "sha256:495706a8d01ff8e64bcd579acf3ef65cfc177b0b04227cd608c9823c172f25dd", size = 3401, upload-time = "2024-12-06T07:09:06.641Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ca/5d/dd76178a8bc4cf4a54a545b302ba259229dba9c15a8fb706c484d2537c31/cassandra_asyncio_driver-0.1.4-py3-none-any.whl", hash = "sha256:82fb8beb3e74cb35eb8f367f743a9518f70d74547f82b768a70bbc1c05dd3a1b", size = 3852, upload-time = "2024-12-06T07:09:05.559Z" },
+]
+
+[[package]]
 name = "cassandra-driver"
 version = "3.30.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1194,6 +1206,20 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/f0/c4/f4107f50dd07169d08d95766cd69104231e694f44a1b25b68ad8b393712d/langgraph_checkpoint-4.3.1.tar.gz", hash = "sha256:625e7c78a72b33e7c47f7e87ca051060fb90aa66f5fd551c472c08376fb669cb", size = 182679, upload-time = "2026-10-26T19:57:31.416Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f3/40/4251d676b5c585d42175c901175d4bff56e22939625e18bcef781fc3e893/langgraph_checkpoint-4.3.1-py3-none-any.whl", hash = "sha256:215a826935c8db4d9676e79fd95943e5b3847d78604390898e1d98581cc594e5", size = 58093, upload-time = "2026-10-26T19:57:30.361Z" },
+]
+
+[[package]]
+name = "langgraph-checkpoint-cassandra"
+version = "0.1.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "cassandra-asyncio-driver" },
+    { name = "cassandra-driver" },
+    { name = "langgraph" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/48/7f/f0f8331984378af0119ea0d2a6e9e740a56f5702aa834f11e04778ad3c81/langgraph_checkpoint_cassandra-0.1.1.tar.gz", hash = "sha256:ef768d7f4ac0aff77890c242b323d4695165550e1db07769125263f6c0b4ecbd", size = 20524, upload-time = "2025-11-11T04:46:53.313Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/88/62/446c6ba65cdad3981ce4e28e11aa6f56681f35623173c33546867873056b/langgraph_checkpoint_cassandra-0.1.1-py3-none-any.whl", hash = "sha256:220ae0e1dd159b4e88460bab1d9f5c4e4cf0faa29518555ee8198ef2b995ac76", size = 21779, upload-time = "2025-11-11T04:46:52.271Z" },
 ]
 
 [[package]]
@@ -2545,6 +2571,7 @@ dependencies = [
     { name = "langchain-huggingface" },
     { name = "langchain-text-splitters" },
     { name = "langgraph" },
+    { name = "langgraph-checkpoint-cassandra" },
     { name = "pyasyncore" },
     { name = "pypdf" },
     { name = "pytest" },
@@ -2568,6 +2595,7 @@ requires-dist = [
     { name = "langchain-huggingface", specifier = ">=1.2.3" },
     { name = "langchain-text-splitters", specifier = ">=1.1.3" },
     { name = "langgraph", specifier = ">=1.2.20" },
+    { name = "langgraph-checkpoint-cassandra", specifier = ">=0.1.1" },
     { name = "pyasyncore", specifier = ">=1.0.5" },
     { name = "pypdf", specifier = ">=7.0.1" },
     { name = "pytest", specifier = ">=9.2.0" },

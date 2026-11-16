@@ -26,15 +26,18 @@ def connect_to_cassandra():
         raise ValueError("ASTRA_DB_KEYSPACE is missing")
 
     # Initialize CassIO
-    cassio.init(
-        token=application_token,
-        database_id=database_id,
-        keyspace=keyspace
-    )
+    try:
+        cassio.init(
+            token=application_token,
+            database_id=database_id,
+            keyspace=keyspace
+        )
 
-    print("Successfully initialized Cassandra connection!")
-
-    return cassio.config.resolve_session()
+        session = cassio.config.resolve_session()
+        print("Successfully initialized Cassandra connection!")
+        return session
+    except Exception as e:
+        raise ConnectionError(f"Failed to connect to Astra DB / Cassandra: {e}") from e
 
 
 if __name__ == "__main__":

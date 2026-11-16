@@ -19,5 +19,5 @@ pyasyncore
 pypdf
 langchain_core
 langgraph
-
+langgraph-checkpoint-cassandra
 

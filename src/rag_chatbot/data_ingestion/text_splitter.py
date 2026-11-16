@@ -1,17 +1,24 @@
 from  langchain_text_splitters import  RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
-def split_documents(documents:list[Document]) -> list[Document]:
-    
-    text_splitter = RecursiveCharacterTextSplitter( chunk_size=1000,
-        chunk_overlap=200,
-        separators=["\n\n", "\n", " ", ""])
-    
-    chunks  =  text_splitter.split_documents(documents)
-    print(f"Total pages: {len(documents)}")
-    print(f"Total chunks: {len(chunks)}")
+def split_documents(documents: list[Document]) -> list[Document]:
+    if not documents:
+        return []
 
-    return chunks
+    try:
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=200,
+            separators=["\n\n", "\n", " ", ""]
+        )
+
+        chunks = text_splitter.split_documents(documents)
+        print(f"Total pages: {len(documents)}")
+        print(f"Total chunks: {len(chunks)}")
+
+        return chunks
+    except Exception as e:
+        raise RuntimeError(f"Failed to split documents: {e}") from e
 
 
 if __name__ == "__main__":

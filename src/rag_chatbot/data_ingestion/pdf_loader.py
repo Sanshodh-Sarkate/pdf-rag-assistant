@@ -34,22 +34,26 @@ def load_pdf_documents()->list[Document]:
         )
         
     all_documents = []
-    
+
     for pdf_file in pdf_files:
-        print(f"Loading PDF: {pdf_file.name}")
-        loader = PyPDFLoader(str(pdf_file))    
-        pages=loader.load()
-        
-        for page in pages:
-            page.metadata["source"] = pdf_file.name
+        try:
+            print(f"Loading PDF: {pdf_file.name}")
+            loader = PyPDFLoader(str(pdf_file))
+            pages = loader.load()
 
-            # Convert PyPDFLoader's zero-based page
-            # into a human-readable one-based page number.
-            page.metadata["page"] += 1
+            for page in pages:
+                page.metadata["source"] = pdf_file.name
 
-        all_documents.extend(pages)
+                # Convert PyPDFLoader's zero-based page
+                # into a human-readable one-based page number.
+                if "page" in page.metadata and isinstance(page.metadata["page"], (int, float)):
+                    page.metadata["page"] = int(page.metadata["page"]) + 1
 
-    print(f"\nTotal PDF files loaded: {len(pdf_files)}")
+            all_documents.extend(pages)
+        except Exception as e:
+            print(f"Error loading PDF file '{pdf_file.name}': {e}")
+
+    print(f"\nTotal PDF files processed: {len(pdf_files)}")
     print(f"Total pages extracted: {len(all_documents)}")
 
     return all_documents
