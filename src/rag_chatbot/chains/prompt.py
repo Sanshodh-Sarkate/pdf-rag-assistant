@@ -21,7 +21,6 @@ Follow these rules:
    relevant source.
 
 Citation format:
-
 Source: <PDF filename>
 Page: <page number>
 

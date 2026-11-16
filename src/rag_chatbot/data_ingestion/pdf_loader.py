@@ -60,7 +60,6 @@ def load_pdf_documents()->list[Document]:
 if __name__ == "__main__":
 
     documents = load_pdf_documents()
-
     for document in documents[:3]:
 
         print("\n---------------------------")
