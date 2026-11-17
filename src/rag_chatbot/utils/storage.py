@@ -38,7 +38,7 @@ def save_conversations(conversations: dict) -> None:
         print(f"Error saving chat history to {STORAGE_FILE}: {e}")
 
 
-# so what 
+
 def sync_langgraph_state(conversation_chain, thread_id: str, messages: list) -> None:
     """
     Ensure the LangGraph conversation_chain checkpointer has the messages
@@ -49,18 +49,19 @@ def sync_langgraph_state(conversation_chain, thread_id: str, messages: list) -> 
 
     config = {"configurable": {"thread_id": thread_id}}
     try:
+        ## get the  conversation from the langGraph  for this given threadId 
         current_state = conversation_chain.get_state(config)
         existing_msgs = current_state.values.get("messages", [])
         if not existing_msgs:
             langchain_messages = []
             for msg in messages:
-                role = msg.get("role")
-                content = msg.get("content", "")
+                role = msg.get("role") ## user
+                content = msg.get("content", "")  ## rag
                 if role == "user":
                     langchain_messages.append(HumanMessage(content=content))
                 elif role == "assistant":
                     langchain_messages.append(AIMessage(content=content))
-
+            ## update the langgraph state 
             if langchain_messages:
                 conversation_chain.update_state(config, {"messages": langchain_messages})
     except Exception as e:

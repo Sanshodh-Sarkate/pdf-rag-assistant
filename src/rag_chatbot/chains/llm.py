@@ -2,7 +2,7 @@ import os
 from dotenv  import  load_dotenv
 from langchain_groq import ChatGroq
 load_dotenv()
-
+# model  define  with groq  
 def get_llm():
     groq_api_key = os.getenv('GROQ_API_KEY')
     if not groq_api_key:

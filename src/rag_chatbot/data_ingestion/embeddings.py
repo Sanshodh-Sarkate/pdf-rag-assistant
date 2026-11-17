@@ -1,6 +1,6 @@
 from langchain_huggingface import HuggingFaceEmbeddings
 
-
+## embedding model
 def get_embedding_model():
     try:
         embedding_model = HuggingFaceEmbeddings(

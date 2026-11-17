@@ -22,7 +22,7 @@ st.set_page_config(
 
 
 # Initialize the conversation chain
-@st.cache_resource
+@st.cache_resource 
 def get_conversation_chain():
     try:
         return create_conversation_chain()
@@ -34,7 +34,7 @@ def get_conversation_chain():
 conversation_chain = get_conversation_chain()
 
 if conversation_chain is None:
-    st.error("⚠️ The chatbot backend could not be initialized. Please check your credentials and configuration.")
+    st.error("The chatbot backend could not be initialized. Please check your credentials and configuration.")
     st.stop()
 
 
@@ -43,7 +43,7 @@ st.title("📚 PDF RAG Chatbot")
 
 # Application description
 st.write("Ask questions about your PDF documents.")
-
+  
 
 # 1. Initialize conversations from persistent disk storage
 if "conversations" not in st.session_state:
@@ -94,6 +94,7 @@ if st.sidebar.button("➕ New Chat", use_container_width=True):
 # Display conversation history
 st.sidebar.subheader("Chat History")
 
+# this for display the chat history and when click on that then open the conversation 
 for thread_id, conv_data in list(st.session_state.conversations.items()):
     title = conv_data.get("title", "New Chat")
     is_active = (thread_id == st.session_state.thread_id)
@@ -182,7 +183,7 @@ if user_input:
 
                 answer = response["messages"][-1].content
             except Exception as e:
-                answer = f"⚠️ Sorry, an error occurred while processing your request: {e}"
+                answer = f"Sorry, an error occurred while processing your request: {e}"
                 st.error(answer)
 
         # Display AI response

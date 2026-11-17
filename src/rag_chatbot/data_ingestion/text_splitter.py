@@ -1,6 +1,7 @@
 from  langchain_text_splitters import  RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 
+## spliting the documents in chunks
 def split_documents(documents: list[Document]) -> list[Document]:
     if not documents:
         return []
