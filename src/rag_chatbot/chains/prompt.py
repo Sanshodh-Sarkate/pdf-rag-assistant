@@ -1,7 +1,7 @@
 
 from langchain_core.prompts import ChatPromptTemplate
 
-
+## system_prompt
 SYSTEM_PROMPT = """
 You are a helpful AI assistant that answers questions
 based only on the provided PDF document context.

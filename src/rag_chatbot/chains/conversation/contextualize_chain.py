@@ -2,7 +2,7 @@ from langchain_core.output_parsers import StrOutputParser
 
 from rag_chatbot.chains.llm import get_llm
 from rag_chatbot.chains.conversation.contextualize_prompt import (get_contextualize_prompt)
-
+## This is for the  contextualize representataion
 def create_contextualize_chain():
     try:
         prompt = get_contextualize_prompt()
