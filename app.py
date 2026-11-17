@@ -51,12 +51,18 @@ if "conversations" not in st.session_state:
 
 # 2. Initialize current active thread_id
 if "thread_id" not in st.session_state:
-    if st.session_state.conversations:
+    query_thread_id = st.query_params.get("thread_id")
+    
+    if query_thread_id and query_thread_id in st.session_state.conversations:
+        st.session_state.thread_id  =  query_thread_id
+    elif st.session_state.conversations:
         # Restore the latest conversation
         st.session_state.thread_id = list(st.session_state.conversations.keys())[-1]
+        st.query_params["thread_id"] = st.session_state.thread_id    
     else:
         new_thread_id = str(uuid.uuid4())
         st.session_state.thread_id = new_thread_id
+        st.query_params["thread_id"] = new_thread_id
         st.session_state.conversations[new_thread_id] = {
             "title": "New Chat",
             "messages": []
@@ -83,6 +89,7 @@ st.sidebar.title("📚 PDF RAG Chatbot")
 if st.sidebar.button("➕ New Chat", use_container_width=True):
     new_thread_id = str(uuid.uuid4())
     st.session_state.thread_id = new_thread_id
+    st.query_params["thread_id"] = new_thread_id
     st.session_state.messages = []
     st.session_state.conversations[new_thread_id] = {
         "title": "New Chat",
@@ -106,6 +113,7 @@ for thread_id, conv_data in list(st.session_state.conversations.items()):
         use_container_width=True
     ):
         st.session_state.thread_id = thread_id
+        st.query_params["thread_id"] =  thread_id
         st.session_state.messages = conv_data.get("messages", [])
         # Synchronize LangGraph checkpointer for the chosen thread
         sync_langgraph_state(
@@ -123,6 +131,7 @@ if st.session_state.conversations:
         st.session_state.messages = []
         new_thread_id = str(uuid.uuid4())
         st.session_state.thread_id = new_thread_id
+        st.query_params["thread_id"] = new_thread_id
         st.session_state.conversations[new_thread_id] = {
             "title": "New Chat",
             "messages": []
