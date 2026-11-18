@@ -12,3 +12,4 @@ wheels/
 
 # Data and chat history
 data/*.json
+.pytest_cache
