@@ -63,11 +63,11 @@ if "thread_id" not in st.session_state:
         new_thread_id = str(uuid.uuid4())
         st.session_state.thread_id = new_thread_id
         st.query_params["thread_id"] = new_thread_id
-        st.session_state.conversations[new_thread_id] = {
-            "title": "New Chat",
-            "messages": []
-        }
-        save_conversations(st.session_state.conversations)
+        # st.session_state.conversations[new_thread_id] = {
+        #     "title": "New Chat",
+        #     "messages": []
+        # }
+        # save_conversations(st.session_state.conversations)
 
 # 3. Initialize chat messages for active conversation
 if "messages" not in st.session_state:
@@ -91,11 +91,11 @@ if st.sidebar.button("➕ New Chat", use_container_width=True):
     st.session_state.thread_id = new_thread_id
     st.query_params["thread_id"] = new_thread_id
     st.session_state.messages = []
-    st.session_state.conversations[new_thread_id] = {
-        "title": "New Chat",
-        "messages": []
-    }
-    save_conversations(st.session_state.conversations)
+    # st.session_state.conversations[new_thread_id] = {
+    #     "title": "New Chat",
+    #     "messages": []
+    # }
+    # save_conversations(st.session_state.conversations)
     st.rerun()
 
 # Display conversation history
@@ -132,11 +132,12 @@ if st.session_state.conversations:
         new_thread_id = str(uuid.uuid4())
         st.session_state.thread_id = new_thread_id
         st.query_params["thread_id"] = new_thread_id
-        st.session_state.conversations[new_thread_id] = {
-            "title": "New Chat",
-            "messages": []
-        }
-        save_conversations(st.session_state.conversations)
+        # st.session_state.conversations[new_thread_id] = {
+        #     "title": "New Chat",
+        #     "messages": []
+        # }
+        # save_conversations(st.session_state.conversations)
+        save_conversations({})
         st.rerun()
 
 
@@ -151,6 +152,9 @@ user_input = st.chat_input("Ask something about your PDFs...")
 
 
 if user_input:
+     # Check if this is a brand new conversation before adding it
+    is_new_chat = st.session_state.thread_id not in st.session_state.conversations
+
     current_conv = st.session_state.conversations.setdefault(
         st.session_state.thread_id,
         {"title": "New Chat", "messages": []}
@@ -207,3 +211,6 @@ if user_input:
     # Persist updated messages to disk storage
     current_conv["messages"] = list(st.session_state.messages)
     save_conversations(st.session_state.conversations)
+
+    if is_new_chat:
+        st.rerun()
