@@ -1,0 +1,60 @@
+{
+  "aea75397-de4a-4e23-bd84-c468afb1fee0": {
+    "title": "what are  the  reponsibilty of the ...",
+    "messages": [
+      {
+        "role": "user",
+        "content": "what are  the  reponsibilty of the empoyee"
+      },
+      {
+        "role": "assistant",
+        "content": "I could not find relevant information in the provided PDF documents."
+      },
+      {
+        "role": "user",
+        "content": "what are the reponsibilty of the employee"
+      },
+      {
+        "role": "assistant",
+        "content": "Employees are responsible for:\n\n- Reading all applicable policies  \n- Completing any required training  \n- Protecting company information  \n- Promptly reporting any concerns  \n\nSource: Company_Policies_Sample_50_Pages (1).pdf, Page 4"
+      }
+    ]
+  },
+  "d6bf93d4-e6ce-47fa-92f5-d63739215a80": {
+    "title": "what about manager",
+    "messages": [
+      {
+        "role": "user",
+        "content": "what about manager  "
+      },
+      {
+        "role": "assistant",
+        "content": "I could not find relevant information in the provided PDF documents."
+      },
+      {
+        "role": "user",
+        "content": "what is the role of  the manager "
+      },
+      {
+        "role": "assistant",
+        "content": "The manager’s role is to:\n\n* Explain local expectations, approve permitted exceptions, and monitor completion of assigned controls.  \n* Follow up when a required annual acknowledgement is incomplete, working with the employee and the policy owner to resolve the issue.  \n\nSource: Company_Policies_Sample_50_Pages (1).pdf  \nPage: 4  \n\nSource: Company_Policies_Sample_50_Pages (1).pdf  \nPage: 45"
+      },
+      {
+        "role": "user",
+        "content": "What is the policy review procedure"
+      },
+      {
+        "role": "assistant",
+        "content": "**Policy review procedure (as described in the sample document)**  \n\n1. **Confirm scope and ownership** – Before starting, verify that the situation falls within the policy’s scope, identify the responsible owner, and consult the current approved source.  \n2. **Decision‑making** – Use documented facts and the relevant approval path. If the facts are unclear, pause and ask the designated owner instead of guessing.  \n3. **Address common issues** – Resolve gaps such as missing context, outdated records, or unclear ownership before completing the review.  \n4. **Record and evidence** – Document the case reference, facts reviewed, decision rationale, reviewer, outcome, and any assigned improvement. Evidence should also cover the purpose, scope, and policy authority (or code of conduct and professional behavior, as applicable).  \n5. **Review cycle** – The policy is reviewed annually or whenever a material process change occurs.  \n\nThese steps are outlined in the “Policy review and change control” section and supported by the records‑and‑evidence guidance on pages 44 and 46.  \n\n**Sources**  \n- Source: Company_Policies_Sample_50_Pages (1).pdf, Page: 41  \n- Source: Company_Policies_Sample_50_Pages (1).pdf, Page: 44  \n- Source: Company_Policies_Sample_50_Pages (1).pdf, Page: 46"
+      },
+      {
+        "role": "user",
+        "content": "what are the  role of  the employee  "
+      },
+      {
+        "role": "assistant",
+        "content": "**Employee roles (as defined in the policy)**  \n- Read applicable policies.  \n- Complete required training.  \n- Protect company information.  \n- Promptly report concerns.  \n\nSource: *Company_Policies_Sample_50_Pages (1).pdf*  \nPage: 4"
+      }
+    ]
+  }
+}
