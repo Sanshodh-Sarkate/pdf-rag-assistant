@@ -1,5 +1,6 @@
 import streamlit as st
 import uuid
+import re
 
 from langchain_core.messages import HumanMessage
 
@@ -45,11 +46,11 @@ st.title("📚 PDF RAG Chatbot")
 st.write("Ask questions about your PDF documents.")
   
 
-# 1. Initialize conversations from persistent disk storage
+#  Initialize conversations from persistent disk storage
 if "conversations" not in st.session_state:
     st.session_state.conversations = load_conversations()
 
-# 2. Initialize current active thread_id
+# Initialize current active thread_id
 if "thread_id" not in st.session_state:
     query_thread_id = st.query_params.get("thread_id")
     
@@ -69,7 +70,7 @@ if "thread_id" not in st.session_state:
         # }
         # save_conversations(st.session_state.conversations)
 
-# 3. Initialize chat messages for active conversation
+#  Initialize chat messages for active conversation
 if "messages" not in st.session_state:
     st.session_state.messages = st.session_state.conversations.get(
         st.session_state.thread_id, {}
@@ -152,65 +153,71 @@ user_input = st.chat_input("Ask something about your PDFs...")
 
 
 if user_input:
-     # Check if this is a brand new conversation before adding it
-    is_new_chat = st.session_state.thread_id not in st.session_state.conversations
-
-    current_conv = st.session_state.conversations.setdefault(
-        st.session_state.thread_id,
-        {"title": "New Chat", "messages": []}
-    )
-
-    # Generate title from the first question
-    if current_conv.get("title") == "New Chat":
-        title = user_input.strip()
-        if len(title) > 35:
-            title = title[:35] + "..."
-        current_conv["title"] = title
-
-    # Store user message
-    st.session_state.messages.append({
-        "role": "user",
-        "content": user_input
-    })
-
-    # Display user message
+    # Display user message immediately in chat
     with st.chat_message("user"):
         st.markdown(user_input)
 
-    # Generate AI response
-    with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
-            try:
-                response = conversation_chain.invoke(
-                    {
-                        "messages": [
-                            HumanMessage(content=user_input)
-                        ]
-                    },
-                    config={
-                        "configurable": {
-                            "thread_id": st.session_state.thread_id
+    strip_input = user_input.strip()
+
+    # Validate that the input contains meaningful content (at least 2 alphanumeric characters)
+    if not re.search(r"[a-zA-Z0-9]{2,}", strip_input):
+        st.warning("Please enter a valid question.")
+    else:
+        # Check if this is a brand new conversation before adding it
+        is_new_chat = st.session_state.thread_id not in st.session_state.conversations
+
+        current_conv = st.session_state.conversations.setdefault(
+            st.session_state.thread_id,
+            {"title": "New Chat", "messages": []}
+        )
+
+        # Generate title from the first question
+        if current_conv.get("title") == "New Chat":
+            title = strip_input
+            if len(title) > 35:
+                title = title[:35] + "..."
+            current_conv["title"] = title
+
+        # Store user message
+        st.session_state.messages.append({
+            "role": "user",
+            "content": user_input
+        })
+
+        # Generate AI response
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking..."):
+                try:
+                    response = conversation_chain.invoke(
+                        {
+                            "messages": [
+                                HumanMessage(content=user_input)
+                            ]
+                        },
+                        config={
+                            "configurable": {
+                                "thread_id": st.session_state.thread_id
+                            }
                         }
-                    }
-                )
+                    )
 
-                answer = response["messages"][-1].content
-            except Exception as e:
-                answer = f"Sorry, an error occurred while processing your request: {e}"
-                st.error(answer)
+                    answer = response["messages"][-1].content
+                except Exception as e:
+                    answer = f"Sorry, an error occurred while processing your request: {e}"
+                    st.error(answer)
 
-        # Display AI response
-        st.markdown(answer)
+            # Display AI response
+            st.markdown(answer)
 
-    # Store AI response
-    st.session_state.messages.append({
-        "role": "assistant",
-        "content": answer
-    })
+        # Store AI response
+        st.session_state.messages.append({
+            "role": "assistant",
+            "content": answer
+        })
 
-    # Persist updated messages to disk storage
-    current_conv["messages"] = list(st.session_state.messages)
-    save_conversations(st.session_state.conversations)
+        # Persist updated messages to disk storage
+        current_conv["messages"] = list(st.session_state.messages)
+        save_conversations(st.session_state.conversations)
 
-    if is_new_chat:
-        st.rerun()
+        if is_new_chat:
+            st.rerun()

@@ -9,6 +9,9 @@ SIMILARITY_THRESHOLD = 0.65
 
 ## This function retrieves relevant document search and returns results above threshold
 def retrieve_documents(query: str, k: int = 4) -> list[Document]:
+    if not query or not query.strip():
+        return []
+
     try:
         ## Get the existing vector data from astra db 
         vector_store = get_vector_store()
