@@ -66,7 +66,6 @@ if __name__ == "__main__":
     documents = load_pdf_documents()
     for document in documents[:3]:
 
-        print("\n---------------------------")
         print("Source:", document.metadata["source"])
         print("Page:", document.metadata["page"])
         print("Content:", document.page_content[:300])

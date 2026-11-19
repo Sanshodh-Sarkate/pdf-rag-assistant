@@ -31,7 +31,6 @@ if __name__ == "__main__":
     chunks = split_documents(documents)
 
     for chunk in chunks[:3]:
-        print("\n---------------------------")
         print("Source:", chunk.metadata["source"])
         print("Page:", chunk.metadata["page"])
         print("Content:", chunk.page_content[:300])

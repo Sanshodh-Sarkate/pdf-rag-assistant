@@ -42,7 +42,6 @@ if __name__ == "__main__":
 
     for i, document in enumerate(documents, start=1):
 
-        print("\n---------------------------")
         print(f"Result: {i}")
 
         print("Source:", document.metadata.get("source"))
