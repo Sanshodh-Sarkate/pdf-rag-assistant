@@ -6,6 +6,7 @@ from rag_chatbot.chains.prompt import get_prompt
 from rag_chatbot.chains.conversation.contextualize_chain import (
     create_contextualize_chain
 )
+from rag_chatbot.chains.conversation.greetings import get_conversational_response
 from rag_chatbot.retrieval.retriever import retrieve_documents
 
 # ## This  function are helep to proper formated the the retrieve documents
@@ -72,7 +73,7 @@ def create_rag_chain():
         | StrOutputParser()
     )
 
-    rag_chain = retrieval_chain | RunnableBranch(
+    standard_rag_chain = retrieval_chain | RunnableBranch(
         (
             lambda inputs: len(inputs["documents"]) == 0,
             RunnableLambda(
@@ -81,6 +82,16 @@ def create_rag_chain():
             )
         ),
         generation_chain
+    )
+
+    rag_chain = RunnableBranch(
+        (
+            lambda inputs: get_conversational_response(inputs.get("question", "")) is not None,
+            RunnableLambda(
+                lambda inputs: get_conversational_response(inputs.get("question", ""))
+            )
+        ),
+        standard_rag_chain
     )
 
     return rag_chain
