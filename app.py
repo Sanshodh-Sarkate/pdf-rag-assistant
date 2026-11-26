@@ -1,7 +1,7 @@
 import streamlit as st
 import uuid
 import re
-
+import time
 from langchain_core.messages import HumanMessage
 
 from rag_chatbot.chains.conversation.conversation_chain import (
@@ -146,6 +146,8 @@ if st.session_state.conversations:
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
+        if message.get("response_time"):
+            st.caption(f" Generated in {message['response_time']}")
 
 
 # Get user input
@@ -154,10 +156,12 @@ user_input = st.chat_input("Ask something about your PDFs...")
 
 if user_input:
     # Display user message immediately in chat
-    with st.chat_message("user"):
-        st.markdown(user_input)
+ 
 
     strip_input = user_input.strip()
+
+    with st.chat_message("user"):
+        st.markdown(strip_input)
 
     # Validate that the input contains meaningful content (at least 2 alphanumeric characters)
     if not re.search(r"[a-zA-Z0-9]{2,}", strip_input):
@@ -186,6 +190,9 @@ if user_input:
 
         # Generate AI response
         with st.chat_message("assistant"):
+            start_time = time.time()
+            time_taken = None
+
             with st.spinner("Thinking..."):
                 try:
                     response = conversation_chain.invoke(
@@ -202,18 +209,27 @@ if user_input:
                     )
 
                     answer = response["messages"][-1].content
+                    end_time = time.time() - start_time
+                    time_taken = f"{end_time:.2f} seconds" 
+
                 except Exception as e:
                     answer = f"Sorry, an error occurred while processing your request: {e}"
                     st.error(answer)
 
-            # Display AI response
+            # Display AI response outside spinner
             st.markdown(answer)
+            if time_taken:
+                st.caption(f"Generated in {time_taken}")
 
         # Store AI response
-        st.session_state.messages.append({
+        ai_message = {
             "role": "assistant",
             "content": answer
-        })
+        }
+        if time_taken:
+            ai_message["response_time"] = time_taken
+
+        st.session_state.messages.append(ai_message)
 
         # Persist updated messages to disk storage
         current_conv["messages"] = list(st.session_state.messages)
