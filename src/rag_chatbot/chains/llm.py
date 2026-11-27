@@ -11,7 +11,8 @@ def get_llm():
 
     try:
         # llm = ChatGroq(model="openai/gpt-oss-20b", temperature=0, groq_api_key=groq_api_key)
-        llm =  ChatOllama(model="qwen2.5:7b" ,  temperature= 0,)
+        llm =  ChatOllama(model="qwen2.5:7b" ,  temperature= 0,  keep_alive=
+        "30m",)
         # llm  =  ChatOllama(model="gemma:2b" , temperature = 0 ,)
         # llm =  ChatOllama(model="gemma3:4b" , temperature = 0 ,    num_ctx=2048,
         #     num_predict=150,
