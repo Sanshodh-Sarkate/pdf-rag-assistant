@@ -1,9 +1,11 @@
+from functools import lru_cache
 from langchain_community.vectorstores import Cassandra
 
 from rag_chatbot.database.cassandra_client import connect_to_cassandra
 from rag_chatbot.data_ingestion.embeddings import get_embedding_model
 
-# this for getting the vector store
+# Cached function   getting the vector store
+@lru_cache(maxsize=1)   
 def get_vector_store():
     try:
         # Connect to Astra DB

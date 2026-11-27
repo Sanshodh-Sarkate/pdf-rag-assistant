@@ -1,5 +1,8 @@
 
 from langchain_core.prompts import ChatPromptTemplate
+# 4. Provide clear and concise answers.
+# Provide a comprehensive, detailed answer covering all responsibilities,
+#    practical examples, scenarios, and requirements mentioned in the context.
 
 ## system_prompt
 SYSTEM_PROMPT = """

@@ -1,6 +1,8 @@
+from functools import lru_cache
 from langchain_huggingface import HuggingFaceEmbeddings
 
-## embedding model
+## Cached singleton for embedding model
+@lru_cache(maxsize=1)
 def get_embedding_model():
     try:
         embedding_model = HuggingFaceEmbeddings(

@@ -1,13 +1,15 @@
 import os  
+from functools import lru_cache
 import cassio  
-from dotenv import  load_dotenv
+from dotenv import load_dotenv
 
-load_dotenv()  ## here we  load the  env varibales  
+load_dotenv()  ## here we load the env variables  
 
-## This code  connect to the cassandra  
+## This code connects to cassandra once and caches the session
+@lru_cache(maxsize=1)
 def connect_to_cassandra():
     """
-    Initialize connection with Astra DB using CassIO.
+    Initialize connection with Astra DB using CassIO (cached singleton).
     """
 
     # Get credentials from .env
